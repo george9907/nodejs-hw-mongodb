@@ -26,12 +26,13 @@ router.get(
   ctrlWrapper(getContactsByIdController),
 );
 
-// router.post(
-//   '/contacts',
-//   jsonParser,
-//   validateBody(contactSchema),
-//   ctrlWrapper(createContactController),
-// );
+router.post(
+  '/contacts',
+  checkRoles(ROLES.AUTHOR),
+  jsonParser,
+  validateBody(contactSchema),
+  ctrlWrapper(createContactController),
+);
 
 router.post(
   '/register',
