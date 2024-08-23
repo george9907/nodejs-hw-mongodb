@@ -18,7 +18,10 @@ import { ROLES } from '../constants/index.js';
 const router = express.Router();
 const jsonParser = express.json();
 
-router.get('/contacts', ctrlWrapper(getContactsController));
+router.use(authenticate);
+router.get('/', ctrlWrapper(getContactsController));
+
+// router.get('/contacts', ctrlWrapper(getContactsController));
 router.get(
   '/contacts/:contactId',
   checkRoles(ROLES.AUTHOR),
@@ -27,19 +30,20 @@ router.get(
 );
 
 router.post(
-  '/contacts',
-  checkRoles(ROLES.AUTHOR),
+  '/',
+  // checkRoles(ROLES.AUTHOR),
   jsonParser,
   validateBody(contactSchema),
   ctrlWrapper(createContactController),
 );
 
-router.post(
-  '/register',
-  jsonParser,
-  validateBody(contactSchema),
-  ctrlWrapper(createContactController),
-);
+
+// router.post(
+//   '/register',
+//   jsonParser,
+//   validateBody(contactSchema),
+//   ctrlWrapper(createContactController),
+// );
 
 router.delete(
   '/contacts/:contactId',
@@ -62,10 +66,5 @@ router.patch(
   validateBody(updateConactSchema),
   ctrlWrapper(patchContactController),
 );
-
-router.use(authenticate);
-
-router.get('/', ctrlWrapper(getContactsController));
-
 
 export default router;
