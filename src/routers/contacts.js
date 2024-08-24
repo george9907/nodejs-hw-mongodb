@@ -14,11 +14,15 @@ import { isValidId } from '../middlewares/isValidId.js';
 import { authenticate } from '../middlewares/authenticate.js';
 import { checkRoles } from '../middlewares/checkRoles.js';
 import { ROLES } from '../constants/index.js';
+import { upload } from '../middlewares/multer.js';
+
 
 const router = express.Router();
 const jsonParser = express.json();
 
-router.get('/contacts', ctrlWrapper(getContactsController));
+router.use(authenticate);
+
+router.get('/', ctrlWrapper(getContactsController));
 router.get(
   '/contacts/:contactId',
   checkRoles(ROLES.AUTHOR),
@@ -26,12 +30,14 @@ router.get(
   ctrlWrapper(getContactsByIdController),
 );
 
-// router.post(
-//   '/contacts',
-//   jsonParser,
-//   validateBody(contactSchema),
-//   ctrlWrapper(createContactController),
-// );
+router.post(
+  '/',
+  // checkRoles(ROLES.AUTHOR),
+  jsonParser,
+  upload.single('photo'),
+  validateBody(contactSchema),
+  ctrlWrapper(createContactController),
+);
 
 router.post(
   '/register',
@@ -50,21 +56,19 @@ router.delete(
 router.put(
   '/contacts/:contactId',
   jsonParser,
+  upload.single('photo'),
   validateBody(contactSchema),
   ctrlWrapper(upsertContactController),
 );
 
 router.patch(
-  '/contacts/:contactId',
-  checkRoles(ROLES.AUTHOR),
+  '/:contactId',
+  // checkRoles(ROLES.AUTHOR),
   jsonParser,
+  upload.single('photo'),
   validateBody(updateConactSchema),
   ctrlWrapper(patchContactController),
 );
-
-router.use(authenticate);
-
-router.get('/', ctrlWrapper(getContactsController));
 
 
 export default router;
