@@ -109,22 +109,3 @@ export const patchContactController = async (req, res, next) => {
   });
 };
 
-
-
-// src/controllers/students.js
-
-// export const patchStudentController = async (req, res, next) => {
-//   const { studentId } = req.params;
-//   const photo = req.file;
-//   		{
-//     fieldname: photo,
-//       originalname : download.jpeg,
-// 		  encoding: 7bit,
-// 		  mimetype: image/jpeg,
-// 		  destination: /Users/borysmeshkov/Projects/goit-study/students-app/temp,
-// 		  filename: 1710709919677_download.jpeg,
-// 		  path: /Users/borysmeshkov/Projects/goit-study/students-app/temp/1710709919677_download.jpeg,
-// 		  size: 7
-// 	  }	
-// 	/* Інший код контролеру */
-// };

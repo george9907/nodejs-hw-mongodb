@@ -32,7 +32,7 @@ router.get(
 
 router.post(
   '/',
-  // checkRoles(ROLES.AUTHOR),
+  checkRoles(ROLES.AUTHOR),
   jsonParser,
   upload.single('photo'),
   validateBody(contactSchema),
@@ -47,14 +47,14 @@ router.post(
 );
 
 router.delete(
-  '/contacts/:contactId',
+  '/:contactId',
   checkRoles(ROLES.AUTHOR),
   isValidId,
   ctrlWrapper(deleteContactConroller),
 );
 
 router.put(
-  '/contacts/:contactId',
+  '/:contactId',
   jsonParser,
   upload.single('photo'),
   validateBody(contactSchema),
@@ -63,7 +63,7 @@ router.put(
 
 router.patch(
   '/:contactId',
-  // checkRoles(ROLES.AUTHOR),
+  checkRoles(ROLES.AUTHOR),
   jsonParser,
   upload.single('photo'),
   validateBody(updateConactSchema),
